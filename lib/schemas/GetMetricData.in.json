@@ -1,0 +1,211 @@
+{
+    "type": "object",
+    "properties": {
+        "MaxDatapoints": {
+            "required": false,
+            "type": "string"
+        },
+        "NextToken": {
+            "required": false,
+            "type": "string"
+        },
+        "requestBody": {
+            "properties": {
+                "EndTime": {
+                    "description": "<p>The time stamp indicating the latest data to be returned.</p> <p>For better performance, specify <code>StartTime</code> and <code>EndTime</code> values that align with the value of the metric's <code>Period</code> and sync up with the beginning and end of an hour. For example, if the <code>Period</code> of a metric is 5 minutes, specifying 12:05 or 12:30 as <code>EndTime</code> can get a faster response from CloudWatch then setting 12:07 or 12:29 as the <code>EndTime</code>.</p>",
+                    "format": "date-time",
+                    "type": "string"
+                },
+                "MaxDatapoints": {
+                    "description": "The maximum number of data points the request should return before paginating. If you omit this, the default of 100,800 is used.",
+                    "type": "integer"
+                },
+                "MetricDataQueries": {
+                    "description": "The metric queries to be returned. A single <code>GetMetricData</code> call can include as many as 100 <code>MetricDataQuery</code> structures. Each of these structures can specify either a metric to retrieve, or a math expression to perform on retrieved data. ",
+                    "items": {
+                        "description": "<p>This structure is used in both <code>GetMetricData</code> and <code>PutMetricAlarm</code>. The supported use of this structure is different for those two operations.</p> <p>When used in <code>GetMetricData</code>, it indicates the metric data to return, and whether this call is just retrieving a batch set of data for one metric, or is performing a math expression on metric data. A single <code>GetMetricData</code> call can include up to 100 <code>MetricDataQuery</code> structures.</p> <p>When used in <code>PutMetricAlarm</code>, it enables you to create an alarm based on a metric math expression. Each <code>MetricDataQuery</code> in the array specifies either a metric to retrieve, or a math expression to be performed on retrieved metrics. A single <code>PutMetricAlarm</code> call can include up to 20 <code>MetricDataQuery</code> structures in the array. The 20 structures can include as many as 10 structures that contain a <code>MetricStat</code> parameter to retrieve a metric, and as many as 10 structures that contain the <code>Expression</code> parameter to perform a math expression. Any expression used in a <code>PutMetricAlarm</code> operation must return a single time series. For more information, see <a href=\"https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/using-metric-math.html#metric-math-syntax\">Metric Math Syntax and Functions</a> in the <i>Amazon CloudWatch User Guide</i>.</p> <p>Some of the parameters of this structure also have different uses whether you are using this structure in a <code>GetMetricData</code> operation or a <code>PutMetricAlarm</code> operation. These differences are explained in the following parameter list.</p>",
+                        "properties": {
+                            "Expression": {
+                                "description": "<p>The math expression to be performed on the returned data, if this object is performing a math expression. This expression can use the <code>Id</code> of the other metrics to refer to those metrics, and can also use the <code>Id</code> of other expressions to use the result of those expressions. For more information about metric math expressions, see <a href=\"https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/using-metric-math.html#metric-math-syntax\">Metric Math Syntax and Functions</a> in the <i>Amazon CloudWatch User Guide</i>.</p> <p>Within each MetricDataQuery object, you must specify either <code>Expression</code> or <code>MetricStat</code> but not both.</p>",
+                                "maxLength": 1024,
+                                "minLength": 1,
+                                "type": "string"
+                            },
+                            "Id": {
+                                "description": "A short name used to tie this object to the results in the response. This name must be unique within a single call to <code>GetMetricData</code>. If you are performing math expressions on this set of data, this name represents that data and can serve as a variable in the mathematical expression. The valid characters are letters, numbers, and underscore. The first character must be a lowercase letter.",
+                                "maxLength": 255,
+                                "minLength": 1,
+                                "type": "string"
+                            },
+                            "Label": {
+                                "description": "A human-readable label for this metric or expression. This is especially useful if this is an expression, so that you know what the value represents. If the metric or expression is shown in a CloudWatch dashboard widget, the label is shown. If Label is omitted, CloudWatch generates a default.",
+                                "type": "string"
+                            },
+                            "MetricStat": {
+                                "description": "<p>The metric to be returned, along with statistics, period, and units. Use this parameter only if this object is retrieving a metric and not performing a math expression on returned data.</p> <p>Within one MetricDataQuery object, you must specify either <code>Expression</code> or <code>MetricStat</code> but not both.</p>",
+                                "properties": {
+                                    "Metric": {
+                                        "description": "The metric to return, including the metric name, namespace, and dimensions.",
+                                        "properties": {
+                                            "Dimensions": {
+                                                "description": "The dimensions for the metric.",
+                                                "items": {
+                                                    "description": "Expands the identity of a metric.",
+                                                    "properties": {
+                                                        "Name": {
+                                                            "description": "The name of the dimension.",
+                                                            "maxLength": 255,
+                                                            "minLength": 1,
+                                                            "type": "string"
+                                                        },
+                                                        "Value": {
+                                                            "description": "The value representing the dimension measurement.",
+                                                            "maxLength": 255,
+                                                            "minLength": 1,
+                                                            "type": "string"
+                                                        }
+                                                    },
+                                                    "required": [
+                                                        "Name",
+                                                        "Value"
+                                                    ],
+                                                    "type": "object"
+                                                },
+                                                "maxItems": 10,
+                                                "type": "array"
+                                            },
+                                            "MetricName": {
+                                                "description": "The name of the metric. This is a required field.",
+                                                "maxLength": 255,
+                                                "minLength": 1,
+                                                "type": "string"
+                                            },
+                                            "Namespace": {
+                                                "description": "The namespace of the metric.",
+                                                "maxLength": 255,
+                                                "minLength": 1,
+                                                "pattern": "[^:].*",
+                                                "type": "string"
+                                            }
+                                        },
+                                        "type": "object"
+                                    },
+                                    "Period": {
+                                        "description": "The period, in seconds, to use when retrieving the metric.",
+                                        "minimum": 1,
+                                        "type": "integer"
+                                    },
+                                    "Stat": {
+                                        "description": "The statistic to return. It can include any CloudWatch statistic or extended statistic.",
+                                        "type": "string"
+                                    },
+                                    "Unit": {
+                                        "description": "The unit to use for the returned data points.",
+                                        "enum": [
+                                            "Seconds",
+                                            "Microseconds",
+                                            "Milliseconds",
+                                            "Bytes",
+                                            "Kilobytes",
+                                            "Megabytes",
+                                            "Gigabytes",
+                                            "Terabytes",
+                                            "Bits",
+                                            "Kilobits",
+                                            "Megabits",
+                                            "Gigabits",
+                                            "Terabits",
+                                            "Percent",
+                                            "Count",
+                                            "Bytes/Second",
+                                            "Kilobytes/Second",
+                                            "Megabytes/Second",
+                                            "Gigabytes/Second",
+                                            "Terabytes/Second",
+                                            "Bits/Second",
+                                            "Kilobits/Second",
+                                            "Megabits/Second",
+                                            "Gigabits/Second",
+                                            "Terabits/Second",
+                                            "Count/Second",
+                                            "None"
+                                        ],
+                                        "type": "string"
+                                    }
+                                },
+                                "required": [
+                                    "Metric",
+                                    "Period",
+                                    "Stat"
+                                ],
+                                "type": "object"
+                            },
+                            "ReturnData": {
+                                "description": "<p>When used in <code>GetMetricData</code>, this option indicates whether to return the timestamps and raw data values of this metric. If you are performing this call just to do math expressions and do not also need the raw data returned, you can specify <code>False</code>. If you omit this, the default of <code>True</code> is used.</p> <p>When used in <code>PutMetricAlarm</code>, specify <code>True</code> for the one expression result to use as the alarm. For all other metrics and expressions in the same <code>PutMetricAlarm</code> operation, specify <code>ReturnData</code> as False.</p>",
+                                "type": "boolean"
+                            }
+                        },
+                        "required": [
+                            "Id"
+                        ],
+                        "type": "object"
+                    },
+                    "type": "array"
+                },
+                "NextToken": {
+                    "description": "Include this value, if it was returned by the previous call, to get the next set of data points.",
+                    "maxLength": 1024,
+                    "minLength": 0,
+                    "type": "string"
+                },
+                "ScanBy": {
+                    "description": "The order in which data points should be returned. <code>TimestampDescending</code> returns the newest data first and paginates when the <code>MaxDatapoints</code> limit is reached. <code>TimestampAscending</code> returns the oldest data first and paginates when the <code>MaxDatapoints</code> limit is reached.",
+                    "enum": [
+                        "TimestampDescending",
+                        "TimestampAscending"
+                    ],
+                    "type": "string"
+                },
+                "StartTime": {
+                    "description": "<p>The time stamp indicating the earliest data to be returned.</p> <p>For better performance, specify <code>StartTime</code> and <code>EndTime</code> values that align with the value of the metric's <code>Period</code> and sync up with the beginning and end of an hour. For example, if the <code>Period</code> of a metric is 5 minutes, specifying 12:05 or 12:30 as <code>StartTime</code> can get a faster response from CloudWatch then setting 12:07 or 12:29 as the <code>StartTime</code>.</p>",
+                    "format": "date-time",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "MetricDataQueries",
+                "StartTime",
+                "EndTime"
+            ],
+            "type": "object"
+        },
+        "X_Amz_Content_Sha256": {
+            "required": false,
+            "type": "string"
+        },
+        "X_Amz_Date": {
+            "required": false,
+            "type": "string"
+        },
+        "X_Amz_Algorithm": {
+            "required": false,
+            "type": "string"
+        },
+        "X_Amz_Credential": {
+            "required": false,
+            "type": "string"
+        },
+        "X_Amz_Security_Token": {
+            "required": false,
+            "type": "string"
+        },
+        "X_Amz_Signature": {
+            "required": false,
+            "type": "string"
+        },
+        "X_Amz_SignedHeaders": {
+            "required": false,
+            "type": "string"
+        }
+    }
+}

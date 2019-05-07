@@ -1,0 +1,83 @@
+{
+    "type": "object",
+    "properties": {
+        "MaxRecords": {
+            "required": false,
+            "type": "string"
+        },
+        "NextToken": {
+            "required": false,
+            "type": "string"
+        },
+        "requestBody": {
+            "properties": {
+                "AlarmName": {
+                    "description": "The name of the alarm.",
+                    "maxLength": 255,
+                    "minLength": 1,
+                    "type": "string"
+                },
+                "EndDate": {
+                    "description": "The ending date to retrieve alarm history.",
+                    "format": "date-time",
+                    "type": "string"
+                },
+                "HistoryItemType": {
+                    "description": "The type of alarm histories to retrieve.",
+                    "enum": [
+                        "ConfigurationUpdate",
+                        "StateUpdate",
+                        "Action"
+                    ],
+                    "type": "string"
+                },
+                "MaxRecords": {
+                    "description": "The maximum number of alarm history records to retrieve.",
+                    "maximum": 100,
+                    "minimum": 1,
+                    "type": "integer"
+                },
+                "NextToken": {
+                    "description": "The token returned by a previous call to indicate that there is more data available.",
+                    "maxLength": 1024,
+                    "minLength": 0,
+                    "type": "string"
+                },
+                "StartDate": {
+                    "description": "The starting date to retrieve alarm history.",
+                    "format": "date-time",
+                    "type": "string"
+                }
+            },
+            "type": "object"
+        },
+        "X_Amz_Content_Sha256": {
+            "required": false,
+            "type": "string"
+        },
+        "X_Amz_Date": {
+            "required": false,
+            "type": "string"
+        },
+        "X_Amz_Algorithm": {
+            "required": false,
+            "type": "string"
+        },
+        "X_Amz_Credential": {
+            "required": false,
+            "type": "string"
+        },
+        "X_Amz_Security_Token": {
+            "required": false,
+            "type": "string"
+        },
+        "X_Amz_Signature": {
+            "required": false,
+            "type": "string"
+        },
+        "X_Amz_SignedHeaders": {
+            "required": false,
+            "type": "string"
+        }
+    }
+}

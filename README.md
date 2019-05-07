@@ -1,11 +1,11 @@
-# ![LOGO](logo.png) Amazon CloudWatch MSP Connector
+# ![LOGO](logo.png) Amazon CloudWatch **flow**ground Connector
 
 ## Description
 
-A generated MSP connector for the Amazon CloudWatch API (version 2010-08-01).
+A generated **flow**ground connector for the Amazon CloudWatch API (version 2010-08-01).
 
 Generated from: https://api.apis.guru/v2/specs/amazonaws.com/monitoring/2010-08-01/swagger.json<br/>
-Generated at: 2019-05-07T11:16:20+03:00
+Generated at: 2019-05-07T17:36:01+03:00
 
 ## API Description
 
@@ -240,7 +240,7 @@ Supported authorization schemes:
 
 ## License
 
-flowground :- Telekom iPaaS / amazonaws-com-monitoring-connector<br/>
+**flow**ground :- Telekom iPaaS / amazonaws-com-monitoring-connector<br/>
 Copyright © 2019, [Deutsche Telekom AG](https://www.telekom.de)<br/>
 contact: flowground@telekom.de
 
